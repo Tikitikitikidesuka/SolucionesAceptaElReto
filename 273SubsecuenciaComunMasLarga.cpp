@@ -14,12 +14,10 @@ int subsecuenciaComunMasLarga(const std::string& secuencia1, const std::string& 
 
     for(int j = 1; j <= length2; j++) {
         for(int i = 1; i <= length1; i++) {
-            int useBoth = matriz[i - 1][(j - 1) % 2];
             if(secuencia1[i - 1] == secuencia2[j - 1])
-                useBoth++;
-            
-            int maxLength = std::max(useBoth, std::max(matriz[i - 1][j % 2], matriz[i][(j - 1) % 2]));
-            matriz[i][j % 2] = maxLength;
+                matriz[i][j % 2] = matriz[i - 1][(j - 1) % 2] + 1;
+            else
+                matriz[i][j % 2] = std::max(matriz[i - 1][(j - 1) % 2], std::max(matriz[i - 1][j % 2], matriz[i][(j - 1) % 2]));
         }
     }
 
@@ -32,8 +30,6 @@ inline bool fastStringInput(std::string& inputStr) {
  
     inputStr.clear();
     inputChar = getchar_unlocked();
-
-    
 
     // Clear noise on buffer
     for (; (inputChar <= ' '); inputChar = getchar_unlocked())
