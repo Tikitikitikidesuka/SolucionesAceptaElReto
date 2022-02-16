@@ -70,6 +70,7 @@ int main() {
     while(std::cin >> words) {
         stringMap strMap;
         vector<string> orderedKeys;
+        orderedKeys.reserve(1000);
         while(words-- > 0) {
             string input;
             std::cin >> input;
