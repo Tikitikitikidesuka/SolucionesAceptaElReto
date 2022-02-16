@@ -62,17 +62,54 @@ class StringUpper {
 typedef std::unordered_map<string, StringUpper> stringMap;
 
 
-int main() {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
+inline bool fastIntInput(int& number) {
+    register int input;
+ 
+    number = 0;
+    input = getchar_unlocked();
 
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9'); input = getchar_unlocked())
+        if(input == EOF) return false;;
+
+    // Get number
+    for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
+        number = number * 10 + input - 48;
+
+    return true;
+}
+
+inline bool fastStringInput(std::string& inputStr) {
+    register char inputChar;
+ 
+    //inputStr.clear();
+    inputChar = getchar_unlocked();
+
+    // Clear noise on buffer
+    for (; (inputChar <= ' '); inputChar = getchar_unlocked())
+        if(inputChar == EOF) return false;
+ 
+    // Get number
+    for (; (inputChar > ' '); inputChar = getchar_unlocked())
+        inputStr += inputChar;
+
+    return true;
+}
+
+inline void fastStringOutput(const std::string& outputString) {
+    for(const char& c : outputString)
+        putchar_unlocked(c);
+}
+
+
+int main() {
     int words;
-    while(std::cin >> words) {
+    while(fastIntInput(words)) {
         stringMap strMap;
         vector<string> orderedKeys;
         while(words-- > 0) {
             string input;
-            std::cin >> input;
+            fastStringInput(input);
             StringUpper inputUpper(input);
 
             string inputKey = inputUpper.getLower();
@@ -88,9 +125,13 @@ int main() {
         }
 
         for(const string& strKey : orderedKeys) {
-            std::cout << strMap[strKey].getString() << "\n";
+            fastStringOutput(strMap[strKey].getString());
+            putchar_unlocked('\n');
         }
 
-        std::cout << "---\n";
+        putchar_unlocked('-');
+        putchar_unlocked('-');
+        putchar_unlocked('-');
+        putchar_unlocked('\n');
     }
 }
