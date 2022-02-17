@@ -107,7 +107,7 @@ int main() {
     while(fastIntInput(words)) {
         stringMap strMap;
         vector<string> orderedKeys;
-        orderedKeys.reserve(1000);
+        orderedKeys.reserve(words);
         while(words-- > 0) {
             string input;
             fastStringInput(input);
