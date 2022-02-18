@@ -24,10 +24,10 @@ inline void fastInput(int* number) {
 
 // Requiere iostream
 // Devuelve el siguiente int positivo de stdin
-inline void fastPositiveInputNoisyStdin(int* number) {
-    register int input;
+inline void fastPositiveInputNoisyStdin(int& number) {
+    register char input;
  
-    *number = 0;
+    number = 0;
     input = getchar_unlocked();
 
     // Clear noise on buffer
@@ -35,9 +35,29 @@ inline void fastPositiveInputNoisyStdin(int* number) {
  
     // Get number
     for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
-        *number = *number * 10 + input - 48;
+        number = number * 10 + input - 48;
 }
 
+
+// Requiere iostream
+// Devuelve el siguiente int positivo de stdin
+// Devuelve false si se ha alcanzado el final del input
+inline bool fastIntInputCheckEnd(int& number) {
+    register char input;
+ 
+    number = 0;
+    input = getchar_unlocked();
+
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9'); input = getchar_unlocked())
+        if(input == EOF) return false;
+ 
+    // Get number
+    for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
+        number = number * 10 + input - 48;
+    
+    return true;
+}
 
 // Requiere iostream
 // Devuelve la siguiente string
