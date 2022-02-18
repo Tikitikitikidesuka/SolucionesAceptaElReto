@@ -5,7 +5,7 @@
 // Devuelve un entero obtenido de stdin
 inline void fastInput(int* number) {
     int negative = 0;
-    register int input;
+    register std::int_fast8_t  input;
  
     *number = 0;
     input = getchar_unlocked();
@@ -25,7 +25,7 @@ inline void fastInput(int* number) {
 // Requiere iostream
 // Devuelve el siguiente int positivo de stdin
 inline void fastPositiveInputNoisyStdin(int& number) {
-    register char input;
+    register std::int_fast8_t input;
  
     number = 0;
     input = getchar_unlocked();
@@ -43,7 +43,7 @@ inline void fastPositiveInputNoisyStdin(int& number) {
 // Devuelve el siguiente int positivo de stdin
 // Devuelve false si se ha alcanzado el final del input
 inline bool fastIntInputCheckEnd(int& number) {
-    register char input;
+    register std::int_fast8_t  input;
  
     number = 0;
     input = getchar_unlocked();
@@ -62,7 +62,7 @@ inline bool fastIntInputCheckEnd(int& number) {
 // Requiere iostream
 // Devuelve la siguiente string
 inline bool fastStringInput(std::string& inputStr) {
-    register char inputChar;
+    register std::int_fast8_t inputChar;
  
     inputStr.clear();
     inputChar = getchar_unlocked();
@@ -81,14 +81,14 @@ inline bool fastStringInput(std::string& inputStr) {
 
 // Requiere iostream
 // Devuelve el siguiente digito
-inline void fastDigitInput(char* number) {
-    register int input;
+inline void fastDigitInput(char& number) {
+    register std::int_fast8_t input;
  
     input = getchar_unlocked();
 
     // Clear noise on buffer
     for (; (input < '0' || input > '9'); input = getchar_unlocked());
-    *number = input - '0';
+    number = input - '0';
 }
 
 
