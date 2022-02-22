@@ -39,9 +39,9 @@ int main() {
         for(c_int xIt = 0; xIt < precision; ++xIt) {
             c_float funcRes = calcularFunc(invPrec * xIt, grado, coeficientes);
             if(funcRes > 1)
-                result += invPrec * 1;
+                result += invPrec;
             else if(funcRes > 0)
-                result += invPrec * calcularFunc(invPrec * xIt, grado, coeficientes);
+                result += invPrec * funcRes;
         }
 
         if(1 - result * 2 < -DIFF_JUSTO) {
