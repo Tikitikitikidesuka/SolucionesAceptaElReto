@@ -6,13 +6,19 @@ typedef float c_float;
 typedef std::int_fast16_t c_int;
 
 
-c_float calcularFunc(c_float x, c_int grado, c_int coeficientes[20]) {
-    c_float result = 0;
-    for(c_int coefIt = 0; coefIt <= grado; ++coefIt)
-        result += coeficientes[coefIt] * pow(x, coefIt);
+inline c_float calcularFunc(c_float x, c_int grado, c_int coeficientes[20]) {
+    c_float power = x; // power = x^1
+    c_float result = coeficientes[0];
+    for(c_int coefIt = 1; coefIt <= grado; ++coefIt) {
+        result += coeficientes[coefIt] * power;
+        power *= x;
+
+        // Implementacion antigua calculaba varias veces la misma potencia
+        /*if(coeficientes[coefIt] != 0)
+            result += coeficientes[coefIt] * pow(x, coefIt);*/
+    }
     return result;
 }
-
 
 const c_float DIFF_JUSTO = 0.001;
 
