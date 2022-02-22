@@ -3,15 +3,15 @@
 
 // Requiere iostream
 // Devuelve el siguiente entero de stdin
-inline bool fastIntInput(int& number) {
-    register bool status = true;
+inline void fastIntInput(int& number) {
+    register bool negativo = false;
     register std::int_fast8_t  input;
  
     // Clear noise on buffer
     for (; (input < '0' || input > '9') && input != '-'; input = getchar_unlocked());
     
     if (input == '-') {
-        status = false;
+        negativo = true;
         input = getchar_unlocked();
     }
 
@@ -19,7 +19,8 @@ inline bool fastIntInput(int& number) {
     for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
         number = number * 10 + input - 48;
     
-    return status;
+    if(negativo)
+        number *= -1;
 }
 
 
