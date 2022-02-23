@@ -1,10 +1,11 @@
 #include <iostream>
 
 
-typedef std::uint_fast64_t c_int;
+typedef std::uint_fast64_t c_int_big;
+typedef std::uint_fast16_t c_int_small;
 
 
-inline void fastIntInput(c_int& number) {
+inline void fastIntInput(c_int_small& number) {
     register std::int_fast8_t input;
  
     number = 0;
@@ -18,9 +19,9 @@ inline void fastIntInput(c_int& number) {
         number = number * 10 + input - 48;
 }
 
-inline void fastOutput(c_int x){
-    std::int_fast8_t buffer[63];
-    register int i=0;
+inline void fastOutput(c_int_big x){
+    std::int_fast8_t buffer[19];
+    register std::int_fast8_t i=0;
     do{
         buffer[i++] = (x % 10) + '0';
         x /= 10;
@@ -31,8 +32,8 @@ inline void fastOutput(c_int x){
 }
 
 
-inline c_int divFact(c_int big, c_int small) {
-    c_int result = 1;
+inline c_int_big divFact(c_int_small big, c_int_small small) {
+    c_int_big result = 1;
     while(big > small)
         result *= big--;
     return result;
@@ -40,7 +41,7 @@ inline c_int divFact(c_int big, c_int small) {
 
 
 int main() {
-    c_int num, den;
+    c_int_small num, den;
     fastIntInput(num);
     fastIntInput(den);
     while(num >= den) {
