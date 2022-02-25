@@ -1,15 +1,18 @@
+#include <deque>
 #include <string>
 #include <iostream>
 #include <unordered_map>
 
 
+using std::deque;
 using std::string;
 using std::unordered_map;
 typedef std::int_fast16_t c_int;
+typedef std::uint_fast8_t c_char;
 
 
-inline bool fastDigitInput(c_int& number) {
-    register std::int_fast8_t input;
+inline bool fastDigitInput(c_char& number) {
+    register c_char input;
  
     input = getchar_unlocked();
 
@@ -37,62 +40,62 @@ const unordered_map<c_int, std::string> PAISES = {
 
 class CodigoBarras {
     private:
-        c_int length;
-        c_int arr[13];
+        deque<c_char> values;
 
     public:
-        c_int getLength() {
-            return length;
-        }
-
-        c_int getDigit(c_int digit) {
-            return arr[length - 1 - digit];
-        }
-
-        c_int getControlDigit() {
-            return arr[length - 1];
+        c_char size() {
+            return values.size();
         }
 
         bool getInput() {
-            length = 0;
-            c_int input;
+            values.clear();
 
-            /*
-            // Quitar los ceros de la izquierda
-            while(fastDigitInput(input) && input == 0);
-            if(input == 0) return false;
-            */
-
-            // Guardar el resto del codigo
+            c_char input;
             while(fastDigitInput(input))
-                arr[length++] = input;
+                values.push_back(input);
+            
+            if(values.size() == 1 && values.back() == 0)
+                return false;
 
-            return length != 1;
+            if(values.size() > 8) { // EAN-13
+                while(values.size() < 13) {
+                    values.push_front(0);
+                }
+            } else {                // EAN-8
+                while(values.size() < 8) {
+                    values.push_front(0);
+                }
+            }
+
+            return true;
         }
 
         bool esValido() {
+            if(values.size() > 13)
+                return false;
+
             c_int suma = 0;
             bool impar = true;
-            for(c_int digito = 1; digito < length; ++digito) {
+            std::deque<c_char>::reverse_iterator it = values.rbegin();
+            c_char control = *it;
+            for(++it; it != values.rend(); ++it) {
                 if(impar)
-                    suma += getDigit(digito) * 3;
+                    suma += *it * 3;
                 else
-                    suma += getDigit(digito);
+                    suma += *it;
                 impar = !impar;
             }
-            return (10 - suma % 10)%10 == getControlDigit();
+            return (suma + values.back()) % 10 == 0;
         }
 
         string getPais() {
-            c_int pais = getDigit(length -1);
+            c_int pais = 0;
             bool encontrado = false;
-            for(c_int digitos = 1; digitos <= 3; ++digitos) {
+            for(std::deque<c_char>::iterator it = values.begin(); !encontrado && it != values.end(); ++it) {
+                pais = pais * 10 + *it;
                 if(PAISES.count(pais))
                     encontrado = true;
-                else
-                    pais = pais * 10 + getDigit(length -1 -digitos);
             }
-
             if(encontrado)
                 return PAISES.at(pais);
             return "Desconocido";
@@ -105,7 +108,7 @@ int main() {
     while(codigo.getInput()) {
         bool valido = codigo.esValido();
         std::cout << (valido ? "SI" : "NO");
-        if(valido && codigo.getLength() > 8) {
+        if(valido && codigo.size() > 8) {
             std::cout << " " << codigo.getPais();
         }
         std::cout << "\n";
