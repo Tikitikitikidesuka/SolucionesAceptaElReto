@@ -82,8 +82,34 @@ inline bool fastStringInput(std::string& inputStr) {
 
 
 // Requiere iostream
+// Guarda el siguiente digito (negativo o positivo)
+// Devuelve true si se ha recogido un digito, false si habia cambio de linea / EOF
+inline bool fastDigitInput(char& number) {
+    register std::int_fast8_t input;
+    register std::int_fast8_t negativo = false;
+
+    input = getchar_unlocked();
+
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9') && input != '-'; input = getchar_unlocked())
+        if(input < ' ' || input == EOF) return false;
+    
+    // Check if negative
+    if(input == '-') {
+        negativo = true;
+        input = getchar_unlocked();
+    }
+
+    number = input - '0';
+    if(negativo) number *= -1;
+
+    return true;
+}
+
+
+// Requiere iostream
 // Devuelve el siguiente digito
-inline void fastDigitInput(char& number) {
+inline void fastPositiveDigitInput(char& number) {
     register std::int_fast8_t input;
  
     input = getchar_unlocked();
