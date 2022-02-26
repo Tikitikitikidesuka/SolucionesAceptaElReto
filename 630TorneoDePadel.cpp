@@ -9,31 +9,28 @@ typedef std::int_fast8_t c_char;
 typedef std::int_fast16_t c_int;
 
 
-inline bool fastIntInput(c_int& number) {
+inline void fastIntInput(c_int& number) {
     register std::int_fast8_t  input;
  
     number = 0;
     input = getchar_unlocked();
 
     // Clear noise on buffer
-    for (; (input < '0' || input > '9'); input = getchar_unlocked())
-        if(input == EOF) return false;
+    for (; (input < '0' || input > '9'); input = getchar_unlocked());
  
     // Get number
     for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
         number = number * 10 + input - 48;
-    
-    return true;
 }
 
 inline void fastOutput(c_int x){
-    std::int_fast8_t buffer[35];
+    std::int_fast8_t buffer[18];
     register c_int i=0;
     do{
         buffer[i++] = (x % 10) + '0';
         x /= 10;
     } while(x);
-    i--;
+    --i;
     while(i >= 0) putchar_unlocked(buffer[i--]);
         putchar_unlocked('\n');
 }
@@ -49,7 +46,7 @@ inline c_int pow2(c_int exp) {
 int main() {
     c_bool estado[MAX_JUGADORES];
 
-    c_int jugadores, rondas;
+    register c_int jugadores, rondas;
     fastIntInput(jugadores);
     fastIntInput(rondas);
 
@@ -57,8 +54,8 @@ int main() {
         for(c_int jugador = 0; jugador < jugadores; ++jugador)
             estado[jugador] = getchar_unlocked() - '0';
 
-        c_int disp = 1;
-        c_int partidos = 0;
+        register  c_int disp = 1;
+        register  c_int partidos = 0;
         for(c_int rondaIt = 0; rondaIt < rondas && disp < jugadores; ++rondaIt) {
             disp = pow2(rondaIt);
             for(c_int jugador = 0; jugador < jugadores; jugador += 2*disp) {
