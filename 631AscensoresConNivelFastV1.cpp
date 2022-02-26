@@ -3,11 +3,14 @@
 #include <vector>
 
 
+#define MAX_ASCENSORES 100000
+
+
 using std::vector;
 typedef std::int_fast16_t c_int;
 
 
-inline bool fastIntInput(int& number) {
+inline bool fastIntInput(c_int& number) {
     register std::int_fast8_t  input;
  
     number = 0;
@@ -24,7 +27,7 @@ inline bool fastIntInput(int& number) {
     return true;
 }
 
-inline void fastOutput(int x){
+inline void fastOutput(c_int x){
     char buffer[35];
     register int i=0;
     do{
@@ -42,6 +45,8 @@ class Ascensor {
         c_int lvl;
         c_int minPiso;
         c_int maxPiso;
+
+        Ascensor() {}
 
         Ascensor(c_int minPiso, c_int maxPiso, c_int lvl):
             minPiso(minPiso), maxPiso(maxPiso), lvl(lvl)
@@ -94,37 +99,35 @@ class Edificio {
 
 
 int main() {
-    int numAscensores;
+    c_int numAscensores;
+    Ascensor ascensores[MAX_ASCENSORES];
     while(fastIntInput(numAscensores)) {
-        int ultimaPlanta = 0;
-        std::vector<Ascensor> ascensores;
-        ascensores.reserve(numAscensores);
+        c_int ultimaPlanta = 0;
+        c_int ascensorIndex = 0;
 
         // Input de ascensores
-        while(numAscensores > 0) {
-            int from, to, lvl;
-            fastIntInput(from);
-            fastIntInput(to);
-            fastIntInput(lvl);
-            if(to > ultimaPlanta) ultimaPlanta = to;
-            Ascensor ascensor = Ascensor(from, to, lvl);
-            ascensores.push_back(ascensor);
-
-            --numAscensores;
+        while(ascensorIndex < numAscensores) {
+            fastIntInput(ascensores[ascensorIndex].minPiso);
+            fastIntInput(ascensores[ascensorIndex].maxPiso);
+            fastIntInput(ascensores[ascensorIndex].lvl);
+            if(ascensores[ascensorIndex].maxPiso > ultimaPlanta)
+                ultimaPlanta = ascensores[ascensorIndex].maxPiso;
+            
+            ++ascensorIndex;
         }
 
         Edificio edificio(ultimaPlanta + 1);
 
         // Ordenar ascensores de menor a mayor nivel
-        std::sort(ascensores.begin(), ascensores.end());
+        std::sort(ascensores, ascensores + numAscensores);
         
-        std::vector<Ascensor>::iterator ascensorIter = ascensores.begin();
-        edificio.addAscensor(*ascensorIter);
-        while(ascensorIter++ != ascensores.end() && !edificio.ultimoPisoAlcanzable()) {
-            edificio.addAscensor(*ascensorIter);
+        c_int ascensorIt = 0;
+        edificio.addAscensor(ascensores[ascensorIt]);
+        for(++ascensorIt; ascensorIt < numAscensores && !edificio.ultimoPisoAlcanzable(); ++ascensorIt) {
+            edificio.addAscensor(ascensores[ascensorIt]);
         }
 
-        fastOutput((ascensorIter-1)->lvl);
+        fastOutput(ascensores[ascensorIt -1].lvl);
     }
 
 
