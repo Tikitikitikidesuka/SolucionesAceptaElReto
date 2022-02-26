@@ -1,47 +1,87 @@
 #include <iostream>
-#include <vector>
 
 
-int pow2(int exp) {
-    if(exp == 0)
-        return 1;
-    else
-        return 2 << exp-1;
+#define MAX_JUGADORES 262144
+
+
+typedef std::int_fast8_t c_bool;
+typedef std::int_fast8_t c_char;
+typedef std::int_fast16_t c_int;
+
+
+inline void fastDigitInput(c_char& number) {
+    register std::int_fast8_t input;
+ 
+    input = getchar_unlocked();
+
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9'); input = getchar_unlocked());
+    number = input - '0';
 }
 
+inline bool fastIntInput(c_int& number) {
+    register std::int_fast8_t  input;
+ 
+    number = 0;
+    input = getchar_unlocked();
+
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9'); input = getchar_unlocked())
+        if(input == EOF) return false;
+ 
+    // Get number
+    for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
+        number = number * 10 + input - 48;
+    
+    return true;
+}
+
+inline void fastOutput(c_int x){
+    std::int_fast8_t buffer[35];
+    register c_int i=0;
+    do{
+        buffer[i++] = (x % 10) + '0';
+        x /= 10;
+    } while(x);
+    i--;
+    while(i >= 0) putchar_unlocked(buffer[i--]);
+        putchar_unlocked('\n');
+}
+
+
+inline c_int pow2(c_int exp) {
+    if(exp == 0)
+        return 1;
+    return 2 << exp - 1;
+}
+
+
 int main() {
-    int jugadores, rondas;
-    while(std::cin >> jugadores >> rondas && (jugadores != 0 || rondas != 0)) {
-        std::cin.get();
+    c_bool estado[MAX_JUGADORES];
 
-        std::vector<int> participaciones;
-        for(int jugadorCntr = 0; jugadorCntr < jugadores; jugadorCntr++) {
-            char input;
-            std::cin.get(input);
-            participaciones.push_back(input - '0');
-        }
-        std::cin.get();
+    c_int jugadores, rondas;
+    fastIntInput(jugadores);
+    fastIntInput(rondas);
 
-        int jugadas = 0;
-        for(int rondaCntr = 1; rondaCntr <= rondas; rondaCntr++) {
-            int pow2Ronda = pow2(rondaCntr);
-            int pow2RondaMin1 = pow2(rondaCntr-1);
-            int jugadoresRonda = jugadores / pow2RondaMin1;
-            for(int jugador = 0; jugador < jugadoresRonda; jugador += 2) {
-                if(participaciones[jugador] && participaciones[jugador+pow2RondaMin1]){
-                    jugadas++;
-                    participaciones[jugador/pow2Ronda] = 1;
-                }
-                if(participaciones[jugador] || participaciones[jugador+pow2RondaMin1]){
-                    participaciones[jugador/pow2Ronda] = 1;
-                }
-                else {
-                    participaciones[jugador/pow2Ronda] = 0;
-                }
+    while(jugadores != 0 || rondas != 0) {
+        for(c_int jugador = 0; jugador < jugadores; ++jugador)
+            fastDigitInput(estado[jugador]);
+
+        c_int disp = 1;
+        c_int partidos = 0;
+        for(c_int rondaIt = 0; rondaIt < rondas && disp < jugadores; ++rondaIt) {
+            disp = pow2(rondaIt);
+            for(c_int jugador = 0; jugador < jugadores; jugador += 2*disp) {
+                partidos += estado[jugador] && estado[jugador + disp];
+                estado[jugador] = estado[jugador] || estado[jugador + disp];
             }
         }
 
-        std::cout << jugadas << "\n";
+        fastOutput(partidos);
+
+        fastIntInput(jugadores);
+        fastIntInput(rondas);
     }
+
     return 0;
 }
