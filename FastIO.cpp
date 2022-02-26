@@ -44,7 +44,7 @@ inline void fastPositiveInputNoisyStdin(int& number) {
 // Requiere iostream
 // Devuelve el siguiente int positivo de stdin
 // Devuelve false si se ha alcanzado el final del input
-inline bool fastIntInputCheckEnd(int& number) {
+inline bool fastPositiveIntInputCheckEnd(int& number) {
     register std::int_fast8_t  input;
  
     number = 0;
@@ -97,7 +97,7 @@ inline void fastDigitInput(char& number) {
 // Requiere iostream
 // Imprime un int
 inline void fastOutput(int x){
-    char buffer[35];
+    std::int_fast8_t buffer[35];
     register int i=0;
     do{
         buffer[i++] = (x % 10) + '0';
