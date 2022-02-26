@@ -95,10 +95,32 @@ inline void fastDigitInput(char& number) {
 
 
 // Requiere iostream
-// Imprime un int
-inline void fastOutput(int x){
+// Imprime un int positivo
+inline void fastIntOutput(int x){
+    std::int_fast8_t negative = x < 0;
+    if(x < 0) {
+        putchar_unlocked('-');
+        negative = true;
+        x *= -1;
+    }
+
     std::int_fast8_t buffer[35];
-    register int i=0;
+    register std::int_fast8_t i=0;
+    do{
+        buffer[i++] = (x % 10) + '0';
+        x /= 10;
+    } while(x);
+    i--;
+    while(i >= 0) putchar_unlocked(buffer[i--]);
+        putchar_unlocked('\n');
+}
+
+
+// Requiere iostream
+// Imprime un int positivo
+inline void fastPositiveIntOutput(int x){
+    std::int_fast8_t buffer[35];
+    register std::int_fast8_t i=0;
     do{
         buffer[i++] = (x % 10) + '0';
         x /= 10;
