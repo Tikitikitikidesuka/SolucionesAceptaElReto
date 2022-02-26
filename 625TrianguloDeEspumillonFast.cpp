@@ -1,10 +1,11 @@
 #include <algorithm>
 #include <iostream>
-#include <vector>
+
+
+#define MAX_LADOS 3000
 
 
 using std::sort;
-using std::vector;
 typedef std::int_fast8_t c_bool;
 typedef std::int_fast32_t c_int;
 
@@ -24,8 +25,8 @@ inline void fastPositiveInput(c_int& number) {
 }
 
 inline void fastOutput(c_int x){
-    std::int_fast8_t buffer[35];
-    register int i=0;
+    std::int_fast8_t buffer[9];
+    register std::int_fast8_t i=0;
     do{
         buffer[i++] = (x % 10) + '0';
         x /= 10;
@@ -74,16 +75,12 @@ int main() {
         c_int numLados;
         fastPositiveInput(numLados);
 
-        
-        vector<c_int> lados;
-        lados.reserve(3000);
+        c_int lados[MAX_LADOS];
         for(c_int ladoIt = 0; ladoIt < numLados; ++ladoIt) {
-            c_int lado;
-            fastPositiveInput(lado);
-            lados.push_back(lado);
+            fastPositiveInput(lados[ladoIt]);
         }
 
-        sort(lados.begin(), lados.end(), std::greater<int>());
+        sort(lados, lados + numLados, std::greater<c_int>());
 
         c_bool encontrado = false;
         c_int perimetro, usados = 0;
