@@ -9,16 +9,6 @@ typedef std::int_fast8_t c_char;
 typedef std::int_fast16_t c_int;
 
 
-inline void fastDigitInput(c_char& number) {
-    register std::int_fast8_t input;
- 
-    input = getchar_unlocked();
-
-    // Clear noise on buffer
-    for (; (input < '0' || input > '9'); input = getchar_unlocked());
-    number = input - '0';
-}
-
 inline bool fastIntInput(c_int& number) {
     register std::int_fast8_t  input;
  
@@ -65,7 +55,7 @@ int main() {
 
     while(jugadores != 0 || rondas != 0) {
         for(c_int jugador = 0; jugador < jugadores; ++jugador)
-            fastDigitInput(estado[jugador]);
+            estado[jugador] = getchar_unlocked() - '0';
 
         c_int disp = 1;
         c_int partidos = 0;
