@@ -25,6 +25,33 @@ inline void fastIntInput(int& number) {
 
 
 // Requiere iostream
+// Devuelve el siguiente entero de stdin
+// Devuelve false si se ha alcanzado el final del input
+inline bool fastIntInputCheckEnd(int& number) {
+    register bool negativo = false;
+    register std::int_fast8_t  input;
+ 
+    // Clear noise on buffer
+    for (; (input < '0' || input > '9') && input != '-'; input = getchar_unlocked())
+        if(input == EOF) return false;
+    
+    if (input == '-') {
+        negativo = true;
+        input = getchar_unlocked();
+    }
+
+    number = 0;
+    for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
+        number = number * 10 + input - 48;
+    
+    if(negativo)
+        number *= -1;
+
+    return true;
+}
+
+
+// Requiere iostream
 // Devuelve el siguiente int positivo de stdin
 inline void fastPositiveInputNoisyStdin(int& number) {
     register std::int_fast8_t input;
