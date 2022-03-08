@@ -18,7 +18,7 @@ inline void fastIntInput(c_int& number) {
 
     number = 0;
     for (; (input >= '0' && input <= '9'); input = getchar_unlocked())
-        number = number * 10 + input - 48;
+        number = number * 10 + input - '0';
     
     if(negativo)
         number *= -1;
