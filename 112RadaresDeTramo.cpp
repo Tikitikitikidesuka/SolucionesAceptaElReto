@@ -6,6 +6,10 @@ typedef std::int_fast16_t c_int;
 
 
 int main() {
+    // Faster I/O
+    std::cin.tie(NULL);
+    std::ios_base::sync_with_stdio(false);
+
     //   metros  km/h   segundos
     c_int dist, maxVel, tiempo;
     std::cin >> dist >> maxVel >> tiempo;
