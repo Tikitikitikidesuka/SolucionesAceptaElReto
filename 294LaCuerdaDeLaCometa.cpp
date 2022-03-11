@@ -74,7 +74,7 @@ c_int minCuerdas(c_int longitud, const vector<c_int>& longitudCuerdas) {
 
         for(c_int it = 1; it <= longitudCuerdas.size(); ++it) {
             for(c_int l = 1; l <= longitud; ++l) {
-                if(l - longitudCuerdas[it-1] >= 0 && mat[(it-1)%2][l - longitudCuerdas[it-1]] != C_INT_MAX) {
+                if(l - longitudCuerdas[it-1] >= 0 && mat[(it-1)%2][l - longitudCuerdas[it-1]] < C_INT_MAX) {
                     mat[it%2][l] = std::min(mat[(it-1)%2][l], 1 + mat[(it-1)%2][l - longitudCuerdas[it-1]]);
                 } else {
                     mat[it%2][l] = mat[(it-1)%2][l];
@@ -96,7 +96,7 @@ c_int costeMinimo(c_int longitud, const vector<c_int>& longitudCuerdas, const ve
 
         for(c_int it = 1; it <= longitudCuerdas.size(); ++it) {
             for(c_int l = 1; l <= longitud; ++l) {
-                if(l - longitudCuerdas[it-1] >= 0 && mat[(it-1)%2][l - longitudCuerdas[it-1]] != C_INT_MAX) {
+                if(l - longitudCuerdas[it-1] >= 0 && mat[(it-1)%2][l - longitudCuerdas[it-1]] < C_INT_MAX) {
                     mat[it%2][l] = std::min(mat[(it-1)%2][l], costeCuerdas[it-1] + mat[(it-1)%2][l - longitudCuerdas[it-1]]);
                 } else {
                     mat[it%2][l] = mat[(it-1)%2][l];
@@ -109,7 +109,6 @@ c_int costeMinimo(c_int longitud, const vector<c_int>& longitudCuerdas, const ve
 
 
 int main() {
-    std::cout << C_INT_MAX << "\n";
     c_int cuerdas, objetivo;
     while(fastIntInputCheckEnd(cuerdas)) {
         fastIntInput(objetivo);
