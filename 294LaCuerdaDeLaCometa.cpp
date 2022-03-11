@@ -2,6 +2,9 @@
 #include <vector>
 
 
+#define MAX_INPUT 1000
+
+
 using std::vector;
 
 typedef std::int_fast64_t c_int;
@@ -41,7 +44,7 @@ inline bool fastIntInputCheckEnd(c_int& number) {
 
 
 c_int numFormas(c_int longitud, const vector<c_int>& longitudCuerdas) {
-    int mat[2][1001];
+    int mat[2][MAX_INPUT + 1];
 
     for(int it = 1; it <= longitud; ++it)
         mat[0][it] = 0;
@@ -61,7 +64,7 @@ c_int numFormas(c_int longitud, const vector<c_int>& longitudCuerdas) {
 }
 
 c_int minCuerdas(c_int longitud, const vector<c_int>& longitudCuerdas) {
-        c_int mat[2][1001];
+        c_int mat[2][MAX_INPUT + 1];
 
         for(c_int it = 1; it <= longitud; ++it)
             mat[0][it] = C_INT_MAX;
@@ -83,7 +86,7 @@ c_int minCuerdas(c_int longitud, const vector<c_int>& longitudCuerdas) {
     }
 
 c_int costeMinimo(c_int longitud, const vector<c_int>& longitudCuerdas, const vector<c_int>& costeCuerdas) {
-        c_int mat[2][1001];
+        c_int mat[2][MAX_INPUT + 1];
 
         for(c_int it = 1; it <= longitud; ++it)
             mat[0][it] = C_INT_MAX;
@@ -106,6 +109,7 @@ c_int costeMinimo(c_int longitud, const vector<c_int>& longitudCuerdas, const ve
 
 
 int main() {
+    std::cout << C_INT_MAX << "\n";
     c_int cuerdas, objetivo;
     while(fastIntInputCheckEnd(cuerdas)) {
         fastIntInput(objetivo);
