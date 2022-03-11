@@ -1,6 +1,11 @@
 #include <iostream>
 
 
+// Easy fast I/O for cin and cout
+std::cin.tie(NULL);
+std::ios_base::sync_with_stdio(false);
+
+
 // Requiere iostream
 // Devuelve el siguiente entero de stdin
 inline void fastIntInput(int& number) {
