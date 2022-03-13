@@ -2,11 +2,6 @@
 #include <vector>
 
 
-#define MAX_DURACION 1000
-#define MAX_CANCIONES 30
-#define MAX_PUNTUACION 10000
-
-
 using std::vector;
 
 typedef std::int_fast32_t c_int;
@@ -63,11 +58,11 @@ c_int maxPuntuacion(c_int it, c_int c1, c_int c2, const vector<Cancion>& cancion
     return tempMaxPuntuacion;
 }
 
-/*
+
 int main() {
     //Fast input
-    //std::cin.tie(NULL);
-    //std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::ios_base::sync_with_stdio(false);
 
     // Program
     c_int numCanciones;
@@ -92,12 +87,12 @@ int main() {
 
     return 0;
 }
-*/
+
 
 
 // BACKTRACKING ES DEMASIADO LENTO :( //
 
-
+/*
 c_int maxPuntuacionBacktracking(c_int duracion, const vector<Cancion>& canciones);
 void maxPuntuacionBacktracking(c_int it, c_int duracion, c_int acumulado, c_int maxSumaRestante, c_int c1, c_int c2, c_int& currentMax, const vector<Cancion>& canciones);
 
@@ -134,7 +129,7 @@ void maxPuntuacionBacktracking(c_int it, c_int duracion, c_int acumulado, c_int 
     maxPuntuacionBacktracking(it+1, duracion, acumulado, maxSumaRestante-canciones[it].puntuacion, c1, c2, currentMax, canciones);
 }
 
-/*
+
 int main() {
     //Fast input
     //std::cin.tie(NULL);
@@ -164,63 +159,6 @@ int main() {
     return 0;
 }
 */
-
-
-
-
-
-
-
-
-int main() {
-    //Fast input
-    //std::cin.tie(NULL);
-    //std::ios_base::sync_with_stdio(false);
-
-    srand(13);
-
-    // Program
-    c_int numCanciones = rand() % MAX_CANCIONES + 1;
-    //std::cin >> numCanciones;
-    while(numCanciones != 0) {
-        c_int duracion = rand() % MAX_DURACION + 1;
-        //std::cin >> duracion;
-
-        vector<Cancion> canciones;
-        canciones.reserve(numCanciones);
-
-        for(c_int cancionIt = 0; cancionIt < numCanciones; ++cancionIt) {
-            Cancion cancion;
-            cancion.duracion = rand() % MAX_DURACION + 1;
-            cancion.puntuacion = rand() % MAX_PUNTUACION + 1;
-            //std::cin >> cancion.duracion >> cancion.puntuacion;
-            canciones.push_back(cancion);
-        }
-
-        c_int dp = maxPuntuacion(duracion, canciones);
-        c_int bk = maxPuntuacionBacktracking(duracion, canciones);
-        std::cout << "DP: " << dp << "\nBK: " << bk << "\n\n";
-
-        if(dp != bk && numCanciones <= 30) {
-            std::cout << "Canciones: " << numCanciones << "\n";
-            std::cout << "Duracion: " << duracion << "\n";
-
-            for(Cancion cancion : canciones)
-                std::cout << cancion.duracion << " " << cancion.puntuacion << "\n";
-            std::cout << "\n";
-
-            break;
-        }
-
-        numCanciones = rand() % MAX_CANCIONES + 1;
-        //std::cin >> numCanciones;
-    }
-
-    return 0;
-}
-
-
-
 
 
 
