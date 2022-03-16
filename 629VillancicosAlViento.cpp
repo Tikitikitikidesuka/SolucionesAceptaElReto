@@ -1,23 +1,29 @@
 #include <iostream>
 #include <vector>
 
-int main() {
-    int numCasas;
-    while(std::cin >> numCasas && numCasas != 0) {
-        std::vector<int> casas;
 
-        for(int cntr = 0; cntr < numCasas; cntr++) {
-            int input;
+typedef std::int_fast32_t c_int;
+
+
+int main() {
+    // Easy fast I/O for cin and cout
+    std::cin.tie(NULL);
+    std::ios_base::sync_with_stdio(false);
+
+    c_int numCasas;
+    while(std::cin >> numCasas && numCasas != 0) {
+        std::vector<c_int> casas;
+        casas.reserve(numCasas);
+
+        for(c_int cntr = 0; cntr < numCasas; cntr++) {
+            c_int input;
             std::cin >> input;
             casas.push_back(input);
         }
 
-        int propag = 0, suma = 0;
-        std::vector<int>::iterator it = casas.end();
-        while(it != casas.begin()) {
-            // Actualizar iterador
-            it--;
-
+        c_int propag = 0, suma = 0;
+        std::vector<c_int>::reverse_iterator it = casas.rbegin();
+        while(it != casas.rend()) {
             // Actualizar propagacion
             propag--;
 
@@ -27,7 +33,9 @@ int main() {
 
             // Generar propagacion
             if(*it >= propag)
-                propag = *it +1;
+                propag = *it + 1;
+
+            ++it;
         }
 
         std::cout << suma << "\n";
