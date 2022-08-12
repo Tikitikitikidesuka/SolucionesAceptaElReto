@@ -5,10 +5,15 @@ int unos(int base) {
 	int resto = 0;
 	int dividendo = 1;
 
-	do {
+	while(dividendo < base) {
+		dividendo = dividendo * 10 + 1;
 		++unos;
+	}
+
+	do {
 		resto = dividendo % base;
 		dividendo = resto * 10 + 1;
+		++unos;
 	} while(resto != 0); 
 	
 	return unos;
@@ -19,4 +24,5 @@ int main() {
 	while(std::cin >> input) {
 		std::cout << unos(input) << '\n';
 	}
+	return 0;
 }
