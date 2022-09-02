@@ -16,8 +16,7 @@ int main() {
 			std::cin >> n >> m;
 
 			if(n <= prev) {
-				int next = n + m * intCeilDiv(prev - n, m);
-				if(next == prev) next += m;
+				int next = n + m * intCeilDiv(prev + 1 - n, m);
 				prev = next;
 			} else {
 				prev = n;
