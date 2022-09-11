@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unordered_set>
 
 #define MAX_NODES 10000
 
@@ -47,11 +46,8 @@ int numCycles(int* graph, int nodes) {
 }
 
 int main() {
-	std::cin.tie(NULL);
-	std::ios_base::sync_with_stdio(false);
-
 	int nodes = 0;
-	while(std::cin >> nodes) {
+	while(scanf("%d", &nodes) != EOF) {
 		int graph[MAX_NODES];
 
 		for(int i = 0; i < nodes; ++i) {
@@ -59,7 +55,7 @@ int main() {
 			graph[i] -= 1;
 		}
 
-		std::cout << numCycles(graph, nodes) << "\n";
+		printf("%d\n", numCycles(graph, nodes));
 	}
 
 	return 0;
