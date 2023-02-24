@@ -85,20 +85,39 @@ int classicDigitsBetween(int a, int b, int base) {
     return digits;
 }
 
-int main() {
-    std::cout << "10000 - 1000000 : " << digitsBetween(10000, 1000000, 10) << "\n";
-    std::cout << "10000 - 1000000 : " << classicDigitsBetween(10000, 1000000, 10) << "\n";
+int equalDigitsPage(int first, int last) {
+    int i = first, j = last;
+    int pivot = (i + j) / 2;
+    int left_digits, right_digits;
 
-    for (int i = 0; i < 10000; ++i) {
-        for (int j = i; j < 10000; ++j) {
-            int newMethod = digitsBetween(i, j, 10);
-            int oldMethod = classicDigitsBetween(i, j, 10);
-            if (newMethod != oldMethod) {
-                std::cout << "Error para : (" << i << ", " << j << ")\n";
-                std::cout << "\tFast da " << newMethod << "\n";
-                std::cout << "\tClassic da " << oldMethod << "\n\n";
-            }
+    left_digits = digitsBetween(first, pivot, 10);
+    right_digits = digitsBetween(pivot + 1, last, 10);
+
+    while (left_digits != right_digits && i < j) {
+        if (left_digits < right_digits) {
+            i = pivot + 1;
+        } else {
+            j = pivot;
         }
+
+        pivot = (i + j) / 2;
+        left_digits = digitsBetween(first, pivot, 10);
+        right_digits = digitsBetween(pivot + 1, last, 10);
+    }
+
+    if (left_digits > right_digits)
+        --pivot;
+
+    return pivot;
+}
+
+int main() {
+    int first, last;
+    std::cin >> first >> last;
+
+    while (first != 0 || last != 0) {
+        std::cout << equalDigitsPage(first, last) << "\n";
+        std::cin >> first >> last;
     }
 
 	return 0;
