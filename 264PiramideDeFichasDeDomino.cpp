@@ -24,8 +24,6 @@ uint32_t maxPiramidHeight(uint32_t pieces) {
 
 
 int main() {
-	std::cout << reverseArithmeticSum(10000000);
-
 	uint32_t pieces;
 
 	while (std::cin >> pieces) {
